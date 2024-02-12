@@ -8,11 +8,11 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(3333),
 })
 
-const _env = envSchema.parse(process.env)
+const _env = envSchema.safeParse(process.env)
 
-if (!_env) {
+if (_env.success === false) {
   console.error('😒 insira uma string válida')
   throw new Error('insira uma string válida')
 }
 
-export const env = _env
+export const env = _env.data
